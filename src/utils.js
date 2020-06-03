@@ -42,6 +42,11 @@ const stripReactIdAttributes = (html) => {
   return html.replace(dataReactId, '')
 }
 
+const stripReactGlassjarUrlPort = (html) => {
+  const dataGlassjarPort = /\/\/local\.teams\.office\.com:[\d]+/g
+  return html.replace(dataGlassjarPort, '//local.teams.office.com')
+}
+
 const serializeReactToHTML = ($el) => {
   let html = ''
 
@@ -49,7 +54,8 @@ const serializeReactToHTML = ($el) => {
     html += element.outerHTML
   })
 
-  const stripped = stripReactIdAttributes(html)
+  const portStripped = stripReactGlassjarUrlPort(html)
+  const stripped = stripReactIdAttributes(portStripped)
   const options = {
     wrap_line_length: 80,
     indent_inner_html: true,
